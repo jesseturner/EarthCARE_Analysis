@@ -1,0 +1,98 @@
+[Group] HeaderData
+[Group] HeaderData/FixedProductHeader
+[Dataset] HeaderData/FixedProductHeader/File_Class - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/File_Description - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/File_Name - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/File_Type - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/File_Version - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/Mission - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/Notes - shape: (), dtype: object
+[Group] HeaderData/FixedProductHeader/Source
+[Dataset] HeaderData/FixedProductHeader/Source/Creation_Date - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/Source/Creator - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/Source/Creator_Version - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/Source/System - shape: (), dtype: object
+[Group] HeaderData/FixedProductHeader/Validity_Period
+[Dataset] HeaderData/FixedProductHeader/Validity_Period/Validity_Start - shape: (), dtype: object
+[Dataset] HeaderData/FixedProductHeader/Validity_Period/Validity_Stop - shape: (), dtype: object
+[Group] HeaderData/VariableProductHeader
+[Group] HeaderData/VariableProductHeader/MainProductHeader
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/ANXLongitude - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/ANXTime - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/acquisitionStation - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/degradedProductQualityFlag - shape: (), dtype: int8
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/description - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/executableMajorVersion - shape: (), dtype: int16
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/executableMinorVersion - shape: (), dtype: int16
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/fileCategory - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/fileClass - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/formatMajorVersion - shape: (), dtype: int16
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/formatMinorVersion - shape: (), dtype: int16
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameID - shape: (), dtype: object
+[Group] HeaderData/VariableProductHeader/MainProductHeader/frameStartCoordinates
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameStartCoordinates/geographicLatitude - shape: (), dtype: float32
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameStartCoordinates/geographicLongitude - shape: (), dtype: float32
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameStartMargin - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameStartTime - shape: (), dtype: object
+[Group] HeaderData/VariableProductHeader/MainProductHeader/frameStopCoordinates
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameStopCoordinates/geographicLatitude - shape: (), dtype: float32
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameStopCoordinates/geographicLongitude - shape: (), dtype: float32
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameStopMargin - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/frameStopTime - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/meanAnomaly - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/missionID - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/orbitEccentricity - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/orbitInclination - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/orbitNumber - shape: (), dtype: uint32
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/orbitSemiMajorAxis - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/originalProductName - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/perigeeArgument - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/processingCentre - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/processingStartTime - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/processingStopTime - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/processorMajorVersion - shape: (), dtype: int16
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/processorMinorVersion - shape: (), dtype: int16
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/processorName - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/productLevel - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/productName - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/productType - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/rightAscension - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/sensingStartTime - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/sensingStopTime - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/stateVectorSource - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/stateVectorTime - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/subsettedProduct - shape: (), dtype: int8
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/xPosition - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/xVelocity - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/yPosition - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/yVelocity - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/zPosition - shape: (), dtype: float64
+[Dataset] HeaderData/VariableProductHeader/MainProductHeader/zVelocity - shape: (), dtype: float64
+[Group] HeaderData/VariableProductHeader/SpecificProductHeader
+[Dataset] HeaderData/VariableProductHeader/SpecificProductHeader/ConfigurationParameters - shape: (), dtype: object
+[Dataset] HeaderData/VariableProductHeader/SpecificProductHeader/InputFileList - shape: (), dtype: object
+[Group] HeaderData/VariableProductHeader/SpecificProductHeader/QualityStatistics
+[Group] ScienceData
+[Dataset] ScienceData/ATLID_detection_status - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/ATLID_target_classification - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/ATLID_target_classification_low_resolution - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/ATLID_target_classification_medium_resolution - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/CPR_ATLID_low_resolution_status - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/CPR_ATLID_medium_resolution_status - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/CPR_ATLID_status - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/CPR_detection_status - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/CPR_target_classification - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/JSG_height - shape: (242,), dtype: >f4
+[Dataset] ScienceData/along_track - shape: (4844,), dtype: >f4
+[Dataset] ScienceData/elevation - shape: (4844,), dtype: float32
+[Dataset] ScienceData/geoid_offset - shape: (4844,), dtype: float64
+[Dataset] ScienceData/height - shape: (4844, 242), dtype: float32
+[Dataset] ScienceData/latitude - shape: (4844,), dtype: float64
+[Dataset] ScienceData/longitude - shape: (4844,), dtype: float64
+[Dataset] ScienceData/quality_low_resolution_status - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/quality_medium_resolution_status - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/quality_status - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/synergetic_target_classification - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/synergetic_target_classification_low_resolution - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/synergetic_target_classification_medium_resolution - shape: (4844, 242), dtype: int8
+[Dataset] ScienceData/time - shape: (4844,), dtype: float64

@@ -6,3 +6,4 @@ dependencies:
   - h5py
   - matplotlib
   - numpy
+  - cartopy

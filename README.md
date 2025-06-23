@@ -1,6 +1,7 @@
 # EarthCARE_Analysis
 
-Data is accessed from: https://ec-pdgs-dissemination2.eo.esa.int/oads/access/collection/EarthCAREL2Validated/tree
+EarthCARE data: 
+* https://ec-pdgs-dissemination2.eo.esa.int/oads/access/collection/EarthCAREL2Validated/tree
 
 Example AC__TC__2B: 
 * https://ec-pdgs-dissemination2.eo.esa.int/oads/data/EarthCAREL2Validated/ECA_EXAC_AC__TC__2B_20250525T234738Z_20250526T014041Z_05633D.ZIP

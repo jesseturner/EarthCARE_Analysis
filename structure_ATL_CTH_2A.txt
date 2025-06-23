@@ -176,4 +176,4 @@
     [attr] _NCProperties: b'version=2,netcdf=4.8.1,hdf5=1.8.22'
     [attr] Conventions: ['CF-1.6']
     [attr] title: ['']
-    [attr] history: ['20250526T014140.559596 /usr/local/bin/PROC /data_PWA/cpf/wd/ec-cpf-ope-nodeh08.mmpds.esa.int/A_LAY_11_40_A_LAY_11_40_228395040/joborder.xml']
+    [attr] history: ['20250617T085637.870709 /usr/local/bin/PROC /data_PWA/cpf/wd/ec-cpf-ope-nodeh07.mmpds.esa.int/A_LAY_11_40_A_LAY_11_40_257022740/joborder.xml']

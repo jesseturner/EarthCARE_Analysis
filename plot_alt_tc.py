@@ -2,7 +2,7 @@ import glob, sys, os
 import h5py
 import matplotlib.pyplot as plt
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 import matplotlib.dates as mdates
 import matplotlib.colors as mcolors
 
@@ -10,8 +10,13 @@ import matplotlib.colors as mcolors
 
 def main():
 
-    date, class_data, height_data, time_data = getData()
+    date = '20250625' # YYYYMMDD
+    start_time = time(5, 57, 00) # HH:mm:ss
+    end_time = time(5, 59, 0)
+
+    class_data, height_data, time_data = getData(date)
     height_data, time_data = convertData(height_data, time_data)
+    time_data, height_data, class_data = filterData(time_data, height_data, class_data, start_time, end_time)
     time_grid = createGrid(height_data, time_data)
     plotData(time_grid, height_data, class_data, date)
 
@@ -19,9 +24,8 @@ def main():
 
 #=====================================================
 
-def getData():
+def getData(date):
 
-    date = '20250625' # YYYYMMDD
     data_directory = f'data_ATL_TC_2A/'
 
     search_pattern = f"{data_directory}/*{date}*"
@@ -34,7 +38,7 @@ def getData():
         print(f'No file containing {date} found.')
         sys.exit(1)
 
-    return date, class_data, height_data, time_data
+    return class_data, height_data, time_data
 
 #-----------------------------------------------------
 
@@ -64,6 +68,17 @@ def convertData(height_data, time_data):
 
 #-----------------------------------------------------
 
+def filterData(time_data, height_data, class_data, start_time, end_time):
+
+    mask = np.array([start_time <= dt.time() <= end_time for dt in time_data])
+    time_data_filtered = np.array(time_data)[mask]
+    height_data_filtered = height_data[mask, :]
+    class_data_filtered = class_data[mask, :]
+
+    return time_data_filtered, height_data_filtered, class_data_filtered
+
+#-----------------------------------------------------
+
 def createGrid(height_data, time_data): 
     time_grid, height_grid = np.meshgrid(time_data, np.arange(height_data.shape[1]), indexing='ij')
 
@@ -84,7 +99,7 @@ def plotData(time_grid, height_data, class_data, date):
     cbar.ax.set_yticklabels(tick_labels)
 
     # Format axes
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S'))
     fig.autofmt_xdate()
     ax.set_ylim(0, 30)
 

@@ -92,7 +92,7 @@ def plotData(time_data, height_data, date):
 
     output_dir = "earthcare_atl_cth_image/"
     os.makedirs(output_dir, exist_ok=True)
-    fig.savefig(f"{output_dir}atl_tc_{date}", dpi=200, bbox_inches='tight')
+    fig.savefig(f"{output_dir}atl_cth_{date}", dpi=200, bbox_inches='tight')
 
 #-----------------------------------------------------
 

@@ -54,15 +54,15 @@ def readTrackData(filepath):
 
 def openFLCI(date):
 
-    flci_directory = "./data_FLCI"
+    nlct_directory = "./data_NLCT"
 
-    search_pattern = f"{flci_directory}/*{date}.nc"
+    search_pattern = f"{nlct_directory}/*{date}*.nc"
     matching_files = glob.glob(search_pattern)
 
     if matching_files:
         file_to_open = matching_files[0]
         ds = xr.open_dataset(file_to_open)
-        BTD = ds["BTD"]
+        BTD = ds["__xarray_dataarray_variable__"]
     else: 
         print(f'No file containing {date} found.')
         sys.exit(1)
@@ -84,21 +84,21 @@ def plotFigure(date, latitudes, longitudes, times, BTD):
     colors = [(0, '#A9A9A9'), (0.5, 'white'), (1, '#1167b1')]  # +3 = blueish teal, 0 = white, -3 = grey
     cmap = LinearSegmentedColormap.from_list('custom_cmap', colors)
     levels = np.linspace(-3, 3, 31)
-    c=ax.contourf(BTD.longitude, BTD.latitude, BTD, cmap=cmap, extend='both', levels=levels)
+    c=ax.contourf(BTD.lon, BTD.lat, BTD, cmap=cmap, extend='both', levels=levels)
     clb = plt.colorbar(c, shrink=0.3, pad=0.05, ax=ax)
     clb.ax.tick_params(labelsize=15)
     clb.set_label('(K)', fontsize=15)
 
+    # Plot the EarthCARE track
     plotEarthCAREtrack(longitudes, latitudes, times, ax, extent)
 
     # Map features
-    ax.add_feature(cfeature.LAND, edgecolor='#000', facecolor='tan', zorder=1)
     ax.gridlines(draw_labels=True, zorder=2)
     ax.add_feature(cfeature.BORDERS, linestyle=':', zorder=3)
-    ax.coastlines(zorder=4)
+    ax.coastlines(zorder=4, linewidth=2)
     
     # Figure features
-    ax.set_title(f"Simulated BTD (11.2 μm - 3.9 μm) \n(GFS + OISST, {date})", fontsize=15, pad=10)
+    ax.set_title(f"Nighttime Low Cloud Test (11.2 μm - 3.9 μm) \n(GOES-19, {date})", fontsize=15, pad=10)
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
     ax.grid(True)
@@ -108,7 +108,7 @@ def plotFigure(date, latitudes, longitudes, times, BTD):
 
     output_dir = "ground_track_image/"
     os.makedirs(output_dir, exist_ok=True)
-    fig.savefig(f"{output_dir}earthcare_flci_{date}", dpi=200, bbox_inches='tight')
+    fig.savefig(f"{output_dir}earthcare_nlct_{date}", dpi=200, bbox_inches='tight')
 
     return
 
@@ -144,7 +144,8 @@ def plotEarthCAREtrack(longitudes, latitudes, times, ax, extent):
         if extent[0] <= lon <= extent[1] and extent[2] <= lat <= extent[3]:
             ax.text(lon + 0.5, lat, time_label, fontsize=10, color='black', weight='bold',
                     transform=ccrs.PlateCarree(), zorder=7)
-            
+
+    
 #-----------------------------------------------------
 
 #=====================================================

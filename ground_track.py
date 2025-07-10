@@ -17,7 +17,7 @@ def main():
 
 def setVariables():
 
-    date = '20250625' # YYYYMMDD
+    date = '20250612' # YYYYMMDD
     filepath = f'ground_track_data/earthcare_{date}.txt'
 
     return filepath, date

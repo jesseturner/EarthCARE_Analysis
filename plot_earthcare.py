@@ -13,7 +13,7 @@ class EarthCarePlot:
 
         if "AC__TC__2B" in filename: 
             self.product_type = "AC__TC__2B"
-            self.start_dt, self.start_dt = self._get_dates(filename)
+            self.start_dt = self._get_dates(filename)
 
             with h5py.File(file_path, 'r') as f:
                 self.class_data = np.array(f['ScienceData/synergetic_target_classification'][()])
@@ -32,12 +32,9 @@ class EarthCarePlot:
         match = re.search(pattern, filename)
         if match:
             start_str = match.group(1)  # '20250525T234738'
-            end_str = match.group(2)    # '20250526T014041'
-
             start_dt = datetime.datetime.strptime(start_str, "%Y%m%dT%H%M%S")
-            end_dt = datetime.datetime.strptime(end_str, "%Y%m%dT%H%M%S")
         
-        return start_dt, end_dt
+        return start_dt
 
     
     def plot(self, start_dt=None, end_dt=None):
@@ -62,7 +59,7 @@ class EarthCarePlot:
 
         pcm = ax.pcolormesh(time_grid, filtered_height, filtered_data, cmap=cmap, shading='auto')
 
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M'))
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
         fig.autofmt_xdate()
 
         ax.set_title("")
@@ -71,12 +68,12 @@ class EarthCarePlot:
 
         output_dir = "plot_earthcare/"
         os.makedirs(output_dir, exist_ok=True)
-        fig.savefig(f"{output_dir}{self.product_type}_{datetime.datetime.strftime(self.start_date, '%Y%m%d%H')}", dpi=200, bbox_inches='tight')
+        fig.savefig(f"{output_dir}{self.product_type}_{datetime.datetime.strftime(self.start_dt, '%Y%m%d%H%M')}", dpi=200, bbox_inches='tight')
 
 
     def _filter_data(self, start_dt=None, end_dt=None):
         if start_dt and end_dt:
-                self.start_date, self.end_date = start_dt, end_dt
+                self.start_dt, self.end_date = start_dt, end_dt
         else:
             print("Using full {self.product_type} swath.")
         
@@ -110,12 +107,12 @@ class EarthCarePlot:
 
         ax.plot(abbr_lon, abbr_lat, color='red', marker='o', linewidth=1, transform=ccrs.PlateCarree())
 
-        extent = [-80, -25, 30, 60]
-        ax.set_extent(extent, crs=ccrs.PlateCarree())
+        #extent = [-80, -25, 30, 60]
+        #ax.set_extent(extent, crs=ccrs.PlateCarree())
 
         # Annotate each point with time (HH:MM), within the visible extent
         for lon, lat, t in zip(abbr_lon, abbr_lat, abbr_time):
-            if extent[0] <= lon <= extent[1] and extent[2] <= lat <= extent[3]:
+            #if extent[0] <= lon <= extent[1] and extent[2] <= lat <= extent[3]:
                 time_label = t.strftime('%H:%M')
                 ax.text(lon + 0.5, lat, time_label, fontsize=8, transform=ccrs.PlateCarree())
 
@@ -125,7 +122,7 @@ class EarthCarePlot:
         ax.add_feature(cfeature.OCEAN, facecolor='lightblue')
         ax.gridlines(draw_labels=True)
 
-        ax.set_title(f"Satellite Ground Track ({datetime.datetime.strftime(self.start_date, '%Y-%m-%d')})")
+        ax.set_title(f"Satellite Ground Track ({datetime.datetime.strftime(self.start_dt, '%Y-%m-%d')})")
         ax.set_xlabel("Longitude")
         ax.set_ylabel("Latitude")
         ax.grid(True)
@@ -133,10 +130,10 @@ class EarthCarePlot:
 
         output_dir = "plot_earthcare/"
         os.makedirs(output_dir, exist_ok=True)
-        fig.savefig(f"{output_dir}{self.product_type}_{datetime.datetime.strftime(self.start_date, '%Y%m%d%H')}_ground_track", dpi=200, bbox_inches='tight')
+        fig.savefig(f"{output_dir}{self.product_type}_{datetime.datetime.strftime(self.start_dt, '%Y%m%d%H%M')}_ground_track", dpi=200, bbox_inches='tight')
 
 
 
-ec = EarthCarePlot("data_AC__TC__2B/ECA_EXAD_AC__TC__2B_20250612T061917Z_20250612T165848Z_05902B.h5")
-ec.plot(datetime.datetime(2025, 6, 12, 6, 22), datetime.datetime(2025, 6, 12, 6, 25))
+ec = EarthCarePlot("data_AC__TC__2B/ECA_EXAD_AC__TC__2B_20250703T062938Z_20250704T000519Z_06229A.h5")
+#ec.plot(datetime.datetime(2025, 7, 3, 6, 21), datetime.datetime(2025, 7, 3, 6, 24))
 ec.plot_groundtrack()

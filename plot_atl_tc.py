@@ -10,9 +10,9 @@ import matplotlib.colors as mcolors
 
 def main():
 
-    date = '20250625' # YYYYMMDD
-    start_time = time(5, 57, 00) # HH:mm:ss
-    end_time = time(5, 59, 0)
+    date = '20250612' # YYYYMMDD
+    start_time = time(6, 22, 00) # HH:mm:ss
+    end_time = time(6, 25, 0)
 
     class_data, height_data, time_data = getData(date)
     height_data, time_data = convertData(height_data, time_data)

@@ -1,1 +1,1 @@
-from .earthcare_plot import EarthCarePlot
+from .plot import EarthCarePlot

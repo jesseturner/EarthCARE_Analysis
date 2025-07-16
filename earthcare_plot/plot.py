@@ -81,6 +81,7 @@ class EarthCarePlot:
         ax.set_title("")
         ax.set_xlabel("Time")
         ax.set_ylabel("Height (km)")
+        ax.set_ylim(0,20)
 
         output_dir = "plot_earthcare/"
         os.makedirs(output_dir, exist_ok=True)

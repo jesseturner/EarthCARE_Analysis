@@ -150,9 +150,3 @@ class EarthCarePlot:
         save_path = f"{output_dir}{self.product_type}_{datetime.datetime.strftime(self.start_dt, '%Y%m%d%H%M')}_ground_track"
         fig.savefig(save_path, dpi=200, bbox_inches='tight')
         print(f"Plot saved at {save_path}.")
-
-
-
-ec = EarthCarePlot("data_AC__TC__2B/ECA_EXAD_AC__TC__2B_20250703T062938Z_20250704T000519Z_06229A.h5")
-ec.plot_groundtrack()
-#ec.info()

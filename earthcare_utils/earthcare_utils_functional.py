@@ -56,25 +56,9 @@ def _set_time(time_data):
     time_data_dt = np.array([ref_time + datetime.timedelta(seconds=sec) for sec in time_data])
     return time_data_dt
 
-#--------------------- OLD FUNCTIONS
+def plot(ds):
 
-def _get_dates(filename):
-    pattern = r"_(\d{8}T\d{6})Z_(\d{8}T\d{6})Z_"
-
-    match = re.search(pattern, filename)
-    if match:
-        start_str = match.group(1)  # '20250525T234738'
-        start_dt = datetime.datetime.strptime(start_str, "%Y%m%dT%H%M%S")
-    
-    return start_dt
-
-
-    
-def plot(self, start_dt=None, end_dt=None):
-
-    time, data, height = self._filter_data(start_dt, end_dt)
-
-    time_grid, height_grid = np.meshgrid(time, np.arange(height.shape[1]), indexing='ij')
+    time_grid, height_grid = np.meshgrid(ds.time, ds.height, indexing='ij')
 
     custom_colors = [
         '#c5c9c7', '#a2653e', '#ffffff', '#ff474c', '#0504aa', '#009337', '#840000',
@@ -85,12 +69,11 @@ def plot(self, start_dt=None, end_dt=None):
         '#363737'
     ]
 
-    plt.figure()
     fig, ax = plt.subplots(figsize=(9, 4))
 
     cmap = ListedColormap(custom_colors)
 
-    pcm = ax.pcolormesh(time_grid, height, data, cmap=cmap, shading='auto')
+    pcm = ax.pcolormesh(time_grid, ds["pixel height"], ds.classification, cmap=cmap, shading='auto')
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
     fig.autofmt_xdate()
@@ -102,9 +85,14 @@ def plot(self, start_dt=None, end_dt=None):
 
     output_dir = "plot_earthcare/"
     os.makedirs(output_dir, exist_ok=True)
-    save_path = f"{output_dir}{self.product_type}_{datetime.datetime.strftime(self.start_dt, '%Y%m%d%H%M')}"
+    save_path = f"{output_dir}AC__TC__2B_example"
     fig.savefig(save_path, dpi=200, bbox_inches='tight')
     print(f"Plot saved at {save_path}.")
+
+    return ds
+
+#--------------------- OLD FUNCTIONS
+
 
 
 def _filter_data(self, start_dt=None, end_dt=None):

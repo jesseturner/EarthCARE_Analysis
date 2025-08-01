@@ -5,6 +5,7 @@ EarthCARE data: https://ec-pdgs-dissemination2.eo.esa.int/oads/access/collection
 
 Install using: `pip install git+https://github.com/jesseturner/EarthCARE_Analysis/`
 
+#--- Update this with a functional programming version
 Example usage: 
 ```
 from earthcare_plot import EarthCarePlot

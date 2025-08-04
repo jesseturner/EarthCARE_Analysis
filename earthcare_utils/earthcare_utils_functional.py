@@ -26,6 +26,8 @@ def explore_earthcare_file(file_path):
         print("\n=== Structure and Metadata ===")
         f.visititems(_print_info)
     
+    return
+    
 def open_earthcare_file(file_path):
     
     with h5py.File(file_path, 'r') as f:
@@ -41,7 +43,7 @@ def open_earthcare_file(file_path):
         data_vars={
             'latitude': (['time'], latitude),
             'longitude': (['time'], longitude),
-            'pixel height': (['time', 'height'], pixel_height_data),
+            'pixel_height': (['time', 'height'], pixel_height_data/1000), # converting from m to km
             'classification': (['time', 'height'], class_data),
         },
         coords={
@@ -54,6 +56,7 @@ def open_earthcare_file(file_path):
 def _set_time(time_data):
     ref_time = datetime.datetime(2000, 1, 1, 0, 0, 0)
     time_data_dt = np.array([ref_time + datetime.timedelta(seconds=sec) for sec in time_data])
+    
     return time_data_dt
 
 def plot(ds):
@@ -73,7 +76,7 @@ def plot(ds):
 
     cmap = ListedColormap(custom_colors)
 
-    pcm = ax.pcolormesh(time_grid, ds["pixel height"], ds.classification, cmap=cmap, shading='auto')
+    pcm = ax.pcolormesh(time_grid, ds.pixel_height, ds.classification, cmap=cmap, shading='auto')
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
     fig.autofmt_xdate()
@@ -83,9 +86,14 @@ def plot(ds):
     ax.set_ylabel("Height (km)")
     ax.set_ylim(0,20)
 
+    
+    dt = ds.time.values[0].astype('datetime64[ms]').astype('O')
+    dt_formatted = f"d{dt:%Y%m%d}_t{dt:%H%M}"
+
+
     output_dir = "plot_earthcare/"
     os.makedirs(output_dir, exist_ok=True)
-    save_path = f"{output_dir}AC__TC__2B_example"
+    save_path = f"{output_dir}AC__TC__2B_{dt_formatted}"
     fig.savefig(save_path, dpi=200, bbox_inches='tight')
     print(f"Plot saved at {save_path}.")
 

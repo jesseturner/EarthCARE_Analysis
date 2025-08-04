@@ -29,6 +29,8 @@ def explore_earthcare_file(file_path):
     return
     
 def open_earthcare_file(file_path):
+
+    data_type = _get_data_type(file_path)
     
     with h5py.File(file_path, 'r') as f:
         class_data = np.array(f['ScienceData/synergetic_target_classification'][()])
@@ -49,9 +51,19 @@ def open_earthcare_file(file_path):
         coords={
             'time': _set_time(time_data),
             'height': height_data
-        })
+        },
+        attrs={
+            'data_type': data_type
+        }
+            )
 
     return ds
+
+def _get_data_type(file_path):
+    filename = os.path.basename(file_path)
+    data_type = filename[9:19]
+
+    return data_type
     
 def _set_time(time_data):
     ref_time = datetime.datetime(2000, 1, 1, 0, 0, 0)
@@ -61,21 +73,9 @@ def _set_time(time_data):
 
 def plot(ds):
 
-    time_grid, height_grid = np.meshgrid(ds.time, ds.height, indexing='ij')
-
-    custom_colors = [
-        '#c5c9c7', '#a2653e', '#ffffff', '#ff474c', '#0504aa', '#009337', '#840000',
-        '#042e60', '#d8dcd6', '#ffff84', '#f5bf03', '#f97306', '#ff000d', '#5539cc',
-        '#2976bb', '#0d75f8', '#014182', '#017b92', '#06b48b', '#aaff32', '#6dedfd',
-        '#01f9c6', '#7bc8f6', '#d7fffe', '#a2cffe', '#04d9ff', '#7a9703', '#b2996e',
-        '#ffbacd', '#d99b82', '#947e94', '#856798', '#ac86a8', '#59656d', '#76424e',
-        '#363737'
-    ]
-
     fig, ax = plt.subplots(figsize=(9, 4))
-
-    cmap = ListedColormap(custom_colors)
-
+    time_grid, height_grid = np.meshgrid(ds.time, ds.height, indexing='ij')
+    cmap = _create_cmap()
     pcm = ax.pcolormesh(time_grid, ds.pixel_height, ds.classification, cmap=cmap, shading='auto')
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
@@ -86,18 +86,33 @@ def plot(ds):
     ax.set_ylabel("Height (km)")
     ax.set_ylim(0,20)
 
-    
-    dt = ds.time.values[0].astype('datetime64[ms]').astype('O')
-    dt_formatted = f"d{dt:%Y%m%d}_t{dt:%H%M}"
-
+    dt_formatted = _get_datetime_str(ds)
 
     output_dir = "plot_earthcare/"
     os.makedirs(output_dir, exist_ok=True)
-    save_path = f"{output_dir}AC__TC__2B_{dt_formatted}"
+    save_path = f"{output_dir}{ds.data_type}_{dt_formatted}"
     fig.savefig(save_path, dpi=200, bbox_inches='tight')
     print(f"Plot saved at {save_path}.")
 
     return ds
+
+def _create_cmap():
+    custom_colors = [
+        '#c5c9c7', '#a2653e', '#ffffff', '#ff474c', '#0504aa', '#009337', '#840000',
+        '#042e60', '#d8dcd6', '#ffff84', '#f5bf03', '#f97306', '#ff000d', '#5539cc',
+        '#2976bb', '#0d75f8', '#014182', '#017b92', '#06b48b', '#aaff32', '#6dedfd',
+        '#01f9c6', '#7bc8f6', '#d7fffe', '#a2cffe', '#04d9ff', '#7a9703', '#b2996e',
+        '#ffbacd', '#d99b82', '#947e94', '#856798', '#ac86a8', '#59656d', '#76424e',
+        '#363737'
+    ]
+    cmap = ListedColormap(custom_colors)
+    
+    return cmap
+
+def _get_datetime_str(ds):
+    dt = ds.time.values[0].astype('datetime64[ms]').astype('O')
+    dt_formatted = f"d{dt:%Y%m%d}_t{dt:%H%M}"
+    return dt_formatted
 
 #--------------------- OLD FUNCTIONS
 

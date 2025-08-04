@@ -114,31 +114,20 @@ def _get_datetime_str(ds):
     dt_formatted = f"d{dt:%Y%m%d}_t{dt:%H%M}"
     return dt_formatted
 
+
+def filter_data(ds, start_dt=None, end_dt=None):
+    if not isinstance(start_dt, datetime.datetime):
+        raise TypeError(f"start_dt must be a datetime, but got {type(start_dt).__name__}")
+    if not isinstance(end_dt, datetime.datetime):
+        raise TypeError(f"end_dt must be a datetime, but got {type(end_dt).__name__}")
+    if not (start_dt < end_dt):
+        raise ValueError(f"start_dt must be before end_dt")
+                         
+    ds_filtered = ds.sel(time = ((ds.time >= np.datetime64(start_dt)) & (ds.time <= np.datetime64(end_dt))))
+
+    return ds_filtered
+
 #--------------------- OLD FUNCTIONS
-
-
-
-def _filter_data(self, start_dt=None, end_dt=None):
-    if start_dt and end_dt:
-            self.start_dt, self.end_date = start_dt, end_dt
-    else:
-        print(f"Using full {self.product_type} swath.")
-    
-    height_km = self.height_data/1000 # convert to km
-    time = self._set_time()
-
-    if start_dt is not None and end_dt is not None:
-        time_mask = (time >= start_dt) & (time <= end_dt)
-        filtered_time = time[time_mask]
-        filtered_data = self.class_data[time_mask, :]
-        filtered_height = height_km[time_mask, :]
-
-    else: 
-        filtered_time = time
-        filtered_data = self.class_data
-        filtered_height = height_km
-
-    return filtered_time, filtered_data, filtered_height
     
 
     

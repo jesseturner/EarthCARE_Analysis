@@ -110,12 +110,13 @@ def _create_cmap():
     return cmap
 
 def _get_datetime_str(ds):
-    dt = ds.time.values[0].astype('datetime64[ms]').astype('O')
-    dt_formatted = f"d{dt:%Y%m%d}_t{dt:%H%M}"
+    dt_start = ds.time.values[0].astype('datetime64[ms]').astype('O')
+    dt_end = ds.time.values[-1].astype('datetime64[ms]').astype('O')
+    dt_formatted = f"d{dt_start:%Y%m%d}_t{dt_start:%H%M}_t{dt_end:%H%M}"
     return dt_formatted
 
 
-def filter_data(ds, start_dt=None, end_dt=None):
+def slice_time_section(ds, start_dt=None, end_dt=None):
     if not isinstance(start_dt, datetime.datetime):
         raise TypeError(f"start_dt must be a datetime, but got {type(start_dt).__name__}")
     if not isinstance(end_dt, datetime.datetime):

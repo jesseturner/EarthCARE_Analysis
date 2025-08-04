@@ -128,16 +128,11 @@ def slice_time_section(ds, start_dt=None, end_dt=None):
 
     return ds_filtered
 
-#--------------------- OLD FUNCTIONS
-    
-
-    
-    def plot_groundtrack(self):
-
-        time = self._set_time()
+def plot_groundtrack(ds):
         step_size = 150
-        abbr_lon = self.longitude[::step_size]
-        abbr_lat = self.latitude[::step_size]
+        abbr_lon = ds.longitude[::step_size]
+        abbr_lat = ds.latitude[::step_size]
+        time = ds.time.values.astype('datetime64[ms]').astype('O') # convert to datetime
         abbr_time = time[::step_size]
         
         projection=ccrs.PlateCarree(central_longitude=0)
@@ -155,7 +150,9 @@ def slice_time_section(ds, start_dt=None, end_dt=None):
         ax.add_feature(cfeature.OCEAN, facecolor='lightblue')
         ax.gridlines(draw_labels=True)
 
-        ax.set_title(f"Satellite Ground Track ({datetime.datetime.strftime(self.start_dt, '%Y-%m-%d')})")
+        min_lon, max_lon, min_lat, max_lat = _set_ground_track_plot_limits(ds)
+        ax.set_extent([min_lon, max_lon, min_lat, max_lat], crs=ccrs.PlateCarree())
+
         ax.set_xlabel("Longitude")
         ax.set_ylabel("Latitude")
         ax.grid(True)
@@ -163,6 +160,33 @@ def slice_time_section(ds, start_dt=None, end_dt=None):
 
         output_dir = "plot_earthcare/"
         os.makedirs(output_dir, exist_ok=True)
-        save_path = f"{output_dir}{self.product_type}_{datetime.datetime.strftime(self.start_dt, '%Y%m%d%H%M')}_ground_track"
+        dt_formatted = _get_datetime_str(ds)
+        save_path = f"{output_dir}ground_track_{dt_formatted}"
         fig.savefig(save_path, dpi=200, bbox_inches='tight')
         print(f"Plot saved at {save_path}.")
+
+        return ds
+
+def _set_ground_track_plot_limits(ds):
+    lat_first = ds.latitude.values[0]
+    lat_last = ds.latitude.values[-1]
+    min_lat = min(lat_first, lat_last)
+    max_lat = max(lat_first, lat_last)
+    lat_diff = max_lat - min_lat
+    buffer_value = 30
+    if lat_diff < buffer_value:
+        min_lat = min_lat - (buffer_value - lat_diff)/2
+        max_lat = max_lat + (buffer_value - lat_diff)/2
+
+    lon_first = ds.longitude.values[0]
+    lon_last = ds.longitude.values[-1]
+    min_lon = min(lon_first, lon_last)
+    max_lon = max(lon_first, lon_last)
+    lon_diff = max_lon - min_lon
+    buffer_value = 30
+    if lon_diff < buffer_value:
+        min_lon = min_lon - (buffer_value - lon_diff)/2
+        max_lon = max_lon + (buffer_value - lon_diff)/2
+
+    return min_lon, max_lon, min_lat, max_lat
+
